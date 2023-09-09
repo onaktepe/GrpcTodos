@@ -1,0 +1,54 @@
+syntax = "proto3";
+import "google/protobuf/timestamp.proto";
+
+option csharp_namespace = "GrpcTodos.Server";
+
+package grpc.todos;
+
+service Todos {
+    rpc AddTodo(AddTodoRequest) returns (EmptyModel);
+    rpc UpdateTodo(UpdateTodoRequest) returns (EmptyModel);
+    rpc DeleteTodo(IdModel) returns (EmptyModel);
+    rpc GetTodos(EmptyModel) returns (TodosResponse);
+    rpc GetTodo(IdModel) returns (TodoDetailResponse);
+}
+
+message IdModel {
+    int32 id = 1;
+}
+
+
+message EmptyModel {
+
+}
+
+message AddTodoRequest {
+    string name = 1;
+    int32 priority = 2;
+}
+
+message UpdateTodoRequest {
+    int32 id = 1;
+    string name = 2;
+    int32 priority = 3;
+}
+
+message TodosResponse {
+    repeated TodoModel todos = 1;
+}
+
+message TodoModel {
+    int32 id = 1;
+    string name = 2;
+    int32 priority = 3;
+    string status = 4;
+}
+
+message TodoDetailResponse {
+    int32 id = 1;
+    string name = 2;
+    int32 priority = 3;
+    string status = 4;
+    google.protobuf.Timestamp created_date = 5;
+    string created_by = 6;
+}
